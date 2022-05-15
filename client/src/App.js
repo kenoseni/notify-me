@@ -1,11 +1,12 @@
 import { useState } from "react";
 import "./App.css";
+import { Card } from "./components/card/Card";
+import { Navbar } from "./components/navbar/Navbar";
+import { posts } from "./data";
 
 function App() {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState("");
-
-  console.log({ user });
 
   const handleChange = (e) => {
     setUsername(e.target.value);
@@ -15,10 +16,21 @@ function App() {
 
   return (
     <div className="container">
-      <div className="login">
-        <input type="text" placeholder="username" onChange={handleChange} />
-        <button onClick={saveUser}>Login</button>
-      </div>
+      {user ? (
+        <>
+          <Navbar />
+          {posts.map((post) => (
+            <Card key={post.id} post={post} />
+          ))}
+
+          <span className="username">{user}</span>
+        </>
+      ) : (
+        <div className="login">
+          <input type="text" placeholder="username" onChange={handleChange} />
+          <button onClick={saveUser}>Login</button>
+        </div>
+      )}
     </div>
   );
 }
